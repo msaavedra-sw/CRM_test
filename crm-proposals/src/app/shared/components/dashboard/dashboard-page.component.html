@@ -4,35 +4,33 @@
     <p>Resumen de pipeline y actividades.</p>
   </header>
 
-  <div class="dashboard__grid">
-    <app-kpi-card
-      *ngIf="kpi$ | async as kpi"
-      label="Oportunidades abiertas"
-      [value]="kpi.abiertas"
-      trend="up"
-      helper="vs. semana anterior"
-    ></app-kpi-card>
-    <app-kpi-card
-      *ngIf="kpi$ | async as kpi"
-      label="Monto total"
-      [value]="kpi.total | currency:'USD'"
-      trend="up"
-      helper="+12%"
-    ></app-kpi-card>
-    <app-kpi-card
-      *ngIf="kpi$ | async as kpi"
-      label="Win rate"
-      [value]="(kpi.winRate | percent:'1.0-0')"
-      trend="flat"
-    ></app-kpi-card>
-    <app-kpi-card
-      *ngIf="kpi$ | async as kpi"
-      label="Próximas actividades"
-      [value]="kpi.proximas"
-      trend="down"
-      helper="para hoy"
-    ></app-kpi-card>
-  </div>
+  @if (kpi$ | async; as kpi) {
+    <div class="dashboard__grid">
+      <app-kpi-card
+        label="Oportunidades abiertas"
+        [value]="kpi.abiertas"
+        trend="up"
+        helper="vs. semana anterior"
+      ></app-kpi-card>
+      <app-kpi-card
+        label="Monto total"
+        [value]="(kpi.total | currency:'USD') || ''"
+        trend="up"
+        helper="+12%"
+      ></app-kpi-card>
+      <app-kpi-card
+        label="Win rate"
+        [value]="(kpi.winRate | percent:'1.0-0') || ''"
+        trend="flat"
+      ></app-kpi-card>
+      <app-kpi-card
+        label="Próximas actividades"
+        [value]="kpi.proximas"
+        trend="down"
+        helper="para hoy"
+      ></app-kpi-card>
+    </div>
+  }
 
   <div class="dashboard__charts">
     <app-mini-chart type="bar" [values]="[4, 8, 6, 12, 9, 14]"></app-mini-chart>
@@ -45,12 +43,14 @@
       <h2 id="activitiesTitle">{{ 'dashboard.activities' | i18n }}</h2>
       <button type="button">Marcar todas</button>
     </div>
-    <app-data-table
-      [columns]="columns"
-      [data]="activities$ | async ?? []"
-      [pageSize]="10"
-      density="compact"
-      [enableInlineEdit]="false"
-    ></app-data-table>
+    @if (activities$ | async; as activities) {
+      <app-data-table
+        [columns]="columns"
+        [data]="activities"
+        [pageSize]="10"
+        density="compact"
+        [enableInlineEdit]="false"
+      ></app-data-table>
+    }
   </section>
 </section>

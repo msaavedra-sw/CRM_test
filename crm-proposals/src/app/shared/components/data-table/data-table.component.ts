@@ -300,4 +300,16 @@ export class DataTableComponent implements OnChanges, AfterViewInit {
         break;
     }
   }
+
+  mathMax(a: number, b: number): number {
+    return Math.max(a, b);
+  }
+
+  mathMin(a: number, b: number): number {
+    return Math.min(a, b);
+  }
+
+  getInputValue(event: Event): string {
+    return (event.target as HTMLInputElement)?.value || '';
+  }
 }

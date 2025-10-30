@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { combineLatest, map } from 'rxjs';
@@ -15,6 +15,8 @@ import { DataTableComponent, DataTableColumn } from '../../shared/components/dat
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OpportunitiesPageComponent {
+  private readonly state = inject(OpportunityStateService);
+
   readonly view$ = combineLatest([
     this.state.opportunities$,
     this.state.selectedIds()
@@ -32,8 +34,6 @@ export class OpportunitiesPageComponent {
     { key: 'fuente', title: 'Fuente', sortable: true },
     { key: 'territorio', title: 'Territorio', sortable: true }
   ];
-
-  constructor(private readonly state: OpportunityStateService) {}
 
   onCellEdit(event: { rowIndex: number; key: string; value: unknown; row: Record<string, unknown> }): void {
     const id = String(event.row['id']);

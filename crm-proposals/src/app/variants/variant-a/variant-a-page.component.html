@@ -2,19 +2,23 @@
   <header>
     <h1>{{ 'variant.a.title' | i18n }}</h1>
     <div class="variant__toolbar">
-      <button type="button" (click)="view$ | async as vm ? exportCsv(vm.rows) : null">Exportar CSV</button>
+      @if (view$ | async; as vm) {
+        <button type="button" (click)="exportCsv(vm.rows)">Exportar CSV</button>
+      }
       <button type="button">Importar CSV</button>
       <input type="search" placeholder="Filtrar rápido" />
     </div>
   </header>
   <div class="variant-a__table">
-    <app-data-table
-      [columns]="columns"
-      [data]="(view$ | async)?.rows ?? []"
-      [pageSize]="30"
-      density="compact"
-      [enableInlineEdit]="true"
-      (cellEdited)="onCellEdit($event)"
-    ></app-data-table>
+    @if (view$ | async; as vm) {
+      <app-data-table
+        [columns]="columns"
+        [data]="vm.rows"
+        [pageSize]="30"
+        density="compact"
+        [enableInlineEdit]="true"
+        (cellEdited)="onCellEdit($event)"
+      ></app-data-table>
+    }
   </div>
 </section>

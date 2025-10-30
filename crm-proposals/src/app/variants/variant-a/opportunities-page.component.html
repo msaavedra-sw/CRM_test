@@ -7,11 +7,13 @@
       <button type="button">Exportar</button>
     </div>
   </header>
-  <app-data-table
-    [columns]="columns"
-    [data]="(view$ | async)?.rows ?? []"
-    [pageSize]="40"
-    density="compact"
-    (cellEdited)="onCellEdit($event)"
-  ></app-data-table>
+  @if (view$ | async; as view) {
+    <app-data-table
+      [columns]="columns"
+      [data]="view.rows"
+      [pageSize]="40"
+      density="compact"
+      (cellEdited)="onCellEdit($event)"
+    ></app-data-table>
+  }
 </section>

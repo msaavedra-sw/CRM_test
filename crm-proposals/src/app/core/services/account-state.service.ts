@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, combineLatest, map } from 'rxjs';
 
 import { InMemoryDataService } from '../data/in-memory-data.service';
 
 @Injectable({ providedIn: 'root' })
 export class AccountStateService {
+  private readonly inMemory = inject(InMemoryDataService);
   private readonly search$ = new BehaviorSubject<string>('');
 
   readonly accounts$ = combineLatest([
@@ -18,8 +19,6 @@ export class AccountStateService {
       );
     })
   );
-
-  constructor(private readonly inMemory: InMemoryDataService) {}
 
   setSearch(value: string): void {
     this.search$.next(value);

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { map } from 'rxjs';
@@ -6,16 +6,19 @@ import { map } from 'rxjs';
 import { OpportunityStateService } from '../../core/services/opportunity-state.service';
 import { DataTableComponent, DataTableColumn } from '../../shared/components/data-table/data-table.component';
 import { KpiCardComponent } from '../../shared/components/kpi-card/kpi-card.component';
+import { I18nPipe } from '../../shared/utils/i18n.pipe';
 
 @Component({
   selector: 'app-variant-b-page',
   standalone: true,
-  imports: [CommonModule, RouterModule, DataTableComponent, KpiCardComponent],
+  imports: [CommonModule, RouterModule, DataTableComponent, KpiCardComponent, I18nPipe],
   templateUrl: './variant-b-page.component.html',
   styleUrl: './variant-b-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VariantBPageComponent {
+  private readonly state = inject(OpportunityStateService);
+
   readonly rows$ = this.state.opportunities$;
   readonly swimlanes$ = this.rows$.pipe(
     map((rows) =>
@@ -33,6 +36,4 @@ export class VariantBPageComponent {
     { key: 'probabilidad', title: 'Probabilidad', type: 'number', sortable: true },
     { key: 'cierrePrevisto', title: 'Cierre', type: 'date', sortable: true }
   ];
-
-  constructor(private readonly state: OpportunityStateService) {}
 }

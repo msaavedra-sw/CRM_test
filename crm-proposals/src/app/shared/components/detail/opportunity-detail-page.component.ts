@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs';
@@ -11,31 +11,33 @@ import { InMemoryDataService } from '../../../core/data/in-memory-data.service';
   standalone: true,
   imports: [CommonModule, DetailPageComponent],
   template: `
-    <app-detail-page
-      *ngIf="opportunity$ | async as opportunity"
-      [header]="{
-        titulo: opportunity.nombre,
-        estado: opportunity.etapa,
-        propietario: opportunity.propietario,
-        monto: opportunity.monto,
-        fechaCierre: opportunity.cierrePrevisto
-      }"
-      [properties]="[
-        { label: 'Cuenta', value: opportunity.cuenta },
-        { label: 'Fuente', value: opportunity.fuente },
-        { label: 'Territorio', value: opportunity.territorio }
-      ]"
-      [timeline]="[
-        { fecha: opportunity.cierrePrevisto, titulo: 'Cierre previsto', descripcion: 'Seguimiento programado' }
-      ]"
-    ></app-detail-page>
+    @if (opportunity$ | async; as opportunity) {
+      <app-detail-page
+        [header]="{
+          titulo: opportunity.nombre,
+          estado: opportunity.etapa,
+          propietario: opportunity.propietario,
+          monto: opportunity.monto,
+          fechaCierre: opportunity.cierrePrevisto
+        }"
+        [properties]="[
+          { label: 'Cuenta', value: opportunity.cuenta },
+          { label: 'Fuente', value: opportunity.fuente },
+          { label: 'Territorio', value: opportunity.territorio }
+        ]"
+        [timeline]="[
+          { fecha: opportunity.cierrePrevisto, titulo: 'Cierre previsto', descripcion: 'Seguimiento programado' }
+        ]"
+      ></app-detail-page>
+    }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OpportunityDetailPageComponent {
+  private readonly data = inject(InMemoryDataService);
+  private readonly route = inject(ActivatedRoute);
+
   readonly opportunity$ = this.route.paramMap.pipe(
     switchMap((params) => this.data.getOpportunity(params.get('id') ?? ''))
   );
-
-  constructor(private readonly data: InMemoryDataService, private readonly route: ActivatedRoute) {}
 }

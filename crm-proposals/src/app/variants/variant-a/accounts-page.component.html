@@ -3,11 +3,13 @@
     <h1>Cuentas</h1>
     <input type="search" placeholder="Buscar cuenta" />
   </header>
-  <app-data-table
-    [columns]="columns"
-    [data]="rows$ | async ?? []"
-    [pageSize]="30"
-    density="regular"
-    [enableInlineEdit]="false"
-  ></app-data-table>
+  @if (rows$ | async; as rows) {
+    <app-data-table
+      [columns]="columns"
+      [data]="rows"
+      [pageSize]="30"
+      density="regular"
+      [enableInlineEdit]="false"
+    ></app-data-table>
+  }
 </section>

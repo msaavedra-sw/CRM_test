@@ -1,4 +1,4 @@
-export interface Account {
+export interface Account extends Record<string, unknown> {
   id: string;
   nombre: string;
   sector: string;

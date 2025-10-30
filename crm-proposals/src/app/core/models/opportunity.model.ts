@@ -1,4 +1,4 @@
-export interface Opportunity {
+export interface Opportunity extends Record<string, unknown> {
   id: string;
   nombre: string;
   cuenta: string;

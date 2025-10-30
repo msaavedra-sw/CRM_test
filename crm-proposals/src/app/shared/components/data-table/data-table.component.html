@@ -3,7 +3,7 @@
     <input
       type="search"
       [value]="search$.value"
-      (input)="updateSearch($event.target.value)"
+      (input)="updateSearch(getInputValue($event))"
       placeholder="Buscar"
       aria-label="Buscar en tabla"
     />
@@ -34,14 +34,15 @@
                 <span *ngIf="sort$.value?.key !== column.key">⇅</span>
               </button>
             </div>
-            <input
-              *ngIf="column.filterable"
-              type="search"
-              [value]="columnFilters$.value[column.key] ?? ''"
-              (input)="updateColumnFilter(column.key, $event.target.value)"
-              placeholder="Filtro"
-              aria-label="Filtrar columna"
-            />
+            @if (column.filterable) {
+              <input
+                type="search"
+                [value]="columnFilters$.value[column.key] || ''"
+                (input)="updateColumnFilter(column.key, getInputValue($event))"
+                placeholder="Filtro"
+                aria-label="Filtrar columna"
+              />
+            }
           </th>
         </tr>
       </thead>
@@ -83,17 +84,19 @@
     </table>
   </cdk-virtual-scroll-viewport>
 
-  <div class="data-table__pagination" role="navigation" aria-label="Paginación">
-    <button type="button" (click)="goToPage(Math.max(page$.value - 1, 0))" [disabled]="page$.value === 0">
-      ◀
-    </button>
-    <span>Página {{ page$.value + 1 }} / {{ (viewModel$ | async)?.totalPages }}</span>
-    <button
-      type="button"
-      (click)="goToPage(Math.min(page$.value + 1, ((viewModel$ | async)?.totalPages ?? 1) - 1))"
-      [disabled]="page$.value >= ((viewModel$ | async)?.totalPages ?? 1) - 1"
-    >
-      ▶
-    </button>
-  </div>
+  @if (viewModel$ | async; as vm) {
+    <div class="data-table__pagination" role="navigation" aria-label="Paginación">
+      <button type="button" (click)="goToPage(mathMax(page$.value - 1, 0))" [disabled]="page$.value === 0">
+        ◀
+      </button>
+      <span>Página {{ page$.value + 1 }} / {{ vm.totalPages }}</span>
+      <button
+        type="button"
+        (click)="goToPage(mathMin(page$.value + 1, vm.totalPages - 1))"
+        [disabled]="page$.value >= vm.totalPages - 1"
+      >
+        ▶
+      </button>
+    </div>
+  }
 </div>

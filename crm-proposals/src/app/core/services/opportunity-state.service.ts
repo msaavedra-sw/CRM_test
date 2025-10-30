@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest, map } from 'rxjs';
 
 import { Opportunity } from '../models/opportunity.model';
@@ -13,10 +13,9 @@ export interface OpportunityFilters {
 
 @Injectable({ providedIn: 'root' })
 export class OpportunityStateService {
+  private readonly data = inject(InMemoryDataService);
   private readonly filters$ = new BehaviorSubject<OpportunityFilters>({ search: '' });
   private readonly selectedIds$ = new BehaviorSubject<Set<string>>(new Set());
-
-  constructor(private readonly data: InMemoryDataService) {}
 
   readonly opportunities$ = combineLatest([
     this.data.getOpportunities(),

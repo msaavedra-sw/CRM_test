@@ -4,20 +4,25 @@
     <p>Tarjetas con resumen por etapa y tabla editable.</p>
   </header>
 
-  <div class="variant-b__kanban" *ngIf="swimlanes$ | async as swimlanes">
-    <app-kpi-card
-      *ngFor="let etapa of swimlanes | keyvalue"
-      [label]="etapa.key"
-      [value]="etapa.value"
-      trend="flat"
-    ></app-kpi-card>
-  </div>
+  @if (swimlanes$ | async; as swimlanes) {
+    <div class="variant-b__kanban">
+      @for (etapa of swimlanes | keyvalue; track etapa.key) {
+        <app-kpi-card
+          [label]="etapa.key"
+          [value]="etapa.value"
+          trend="flat"
+        ></app-kpi-card>
+      }
+    </div>
+  }
 
-  <app-data-table
-    [columns]="columns"
-    [data]="rows$ | async ?? []"
-    [pageSize]="25"
-    density="regular"
-    [enableInlineEdit]="true"
-  ></app-data-table>
+  @if (rows$ | async; as rows) {
+    <app-data-table
+      [columns]="columns"
+      [data]="rows"
+      [pageSize]="25"
+      density="regular"
+      [enableInlineEdit]="true"
+    ></app-data-table>
+  }
 </section>

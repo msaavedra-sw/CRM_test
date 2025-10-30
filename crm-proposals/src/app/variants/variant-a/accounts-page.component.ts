@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { map } from 'rxjs';
@@ -15,6 +15,8 @@ import { DataTableComponent, DataTableColumn } from '../../shared/components/dat
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AccountsPageComponent {
+  private readonly state = inject(AccountStateService);
+
   readonly rows$ = this.state.accounts$.pipe(
     map((accounts) =>
       accounts.map((account) => ({
@@ -32,6 +34,4 @@ export class AccountsPageComponent {
     { key: 'territorio', title: 'Territorio', sortable: true },
     { key: 'ingresosAnuales', title: 'Ingresos', type: 'number', sortable: true, summary: 'sum' }
   ];
-
-  constructor(private readonly state: AccountStateService) {}
 }

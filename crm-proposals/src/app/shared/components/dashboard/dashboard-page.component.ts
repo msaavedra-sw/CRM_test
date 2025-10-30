@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CommonModule, DatePipe, DecimalPipe, PercentPipe } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { CommonModule, DatePipe, DecimalPipe, PercentPipe, CurrencyPipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { combineLatest, map } from 'rxjs';
 
@@ -22,13 +22,17 @@ import { I18nPipe } from '../../utils/i18n.pipe';
     I18nPipe,
     DatePipe,
     DecimalPipe,
-    PercentPipe
+    PercentPipe,
+    CurrencyPipe
   ],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardPageComponent {
+  private readonly data = inject(InMemoryDataService);
+  private readonly activities = inject(ActivityStateService);
+
   readonly activities$ = this.activities.activities$;
   readonly opportunities$ = this.data.getOpportunities();
 
@@ -49,9 +53,4 @@ export class DashboardPageComponent {
     { key: 'cuenta', title: 'Cuenta', sortable: true },
     { key: 'estado', title: 'Estado', sortable: true }
   ];
-
-  constructor(
-    private readonly data: InMemoryDataService,
-    private readonly activities: ActivityStateService
-  ) {}
 }

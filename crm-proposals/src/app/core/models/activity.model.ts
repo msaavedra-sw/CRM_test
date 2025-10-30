@@ -1,4 +1,4 @@
-export interface Activity {
+export interface Activity extends Record<string, unknown> {
   id: string;
   tipo: 'Llamada' | 'Reunión' | 'Tarea';
   asunto: string;
