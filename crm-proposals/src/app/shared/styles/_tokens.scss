@@ -1,0 +1,104 @@
+$color-palette: (
+  'background': #f6f8fb,
+  'surface': #ffffff,
+  'surface-muted': #f1f3f8,
+  'border': #dbe1ea,
+  'text': #1f2933,
+  'text-muted': #52606d,
+  'accent': #4f46ef,
+  'accent-soft': rgba(79, 70, 239, 0.12),
+  'accent-strong': #372fce,
+  'positive': #0ea965,
+  'warning': #f59f00,
+  'critical': #f04f47,
+  'on-accent': #ffffff
+);
+
+$color-palette-dark: (
+  'background': #0f172a,
+  'surface': #111c2f,
+  'surface-muted': #1e2a3f,
+  'border': #1f2e45,
+  'text': #f7fafc,
+  'text-muted': #cbd5f5,
+  'accent': #7f5bff,
+  'accent-soft': rgba(127, 91, 255, 0.2),
+  'accent-strong': #997cff,
+  'positive': #2bd980,
+  'warning': #f7b941,
+  'critical': #ff6f6b,
+  'on-accent': #0f172a
+);
+
+$spacing-scale: (
+  0: 0,
+  0.5: 0.25rem,
+  1: 0.5rem,
+  1.5: 0.75rem,
+  2: 1rem,
+  3: 1.5rem,
+  4: 2rem,
+  6: 3rem,
+  8: 4rem
+);
+
+$radius-scale: (
+  'xs': 0.25rem,
+  'sm': 0.375rem,
+  'md': 0.5rem,
+  'lg': 0.75rem,
+  'xl': 1rem,
+  'pill': 999px
+);
+
+$shadow-scale: (
+  'soft': 0 8px 20px rgba(15, 23, 42, 0.08),
+  'medium': 0 16px 40px rgba(15, 23, 42, 0.12)
+);
+
+$layer-scale: (
+  'base': 0,
+  'raised': 10,
+  'overlay': 100,
+  'modal': 1000
+);
+
+@function color($token) {
+  @return var(--color-#{$token});
+}
+
+@function spacing($token) {
+  @return map-get($spacing-scale, $token);
+}
+
+@function radius($token) {
+  @return map-get($radius-scale, $token);
+}
+
+@function layer($token) {
+  @return map-get($layer-scale, $token);
+}
+
+:root {
+  @each $name, $value in $color-palette {
+    --color-#{$name}: #{$value};
+  }
+}
+
+[data-theme='dark'] {
+  @each $name, $value in $color-palette-dark {
+    --color-#{$name}: #{$value};
+  }
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: color('text');
+  background: color('background');
+  margin: 0;
+}
+
+:focus-visible {
+  outline: 2px solid color('accent');
+  outline-offset: 2px;
+}

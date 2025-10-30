@@ -1,0 +1,99 @@
+<div class="data-table" [class.data-table--dense]="density === 'compact'">
+  <div class="data-table__toolbar" role="search">
+    <input
+      type="search"
+      [value]="search$.value"
+      (input)="updateSearch($event.target.value)"
+      placeholder="Buscar"
+      aria-label="Buscar en tabla"
+    />
+    <ng-content select="[toolbar]"></ng-content>
+  </div>
+
+  <cdk-virtual-scroll-viewport
+    class="data-table__viewport"
+    [itemSize]="density === 'compact' ? 32 : 44"
+    role="table"
+    aria-label="Tabla editable"
+  >
+    <table>
+      <thead>
+        <tr>
+          <th
+            *ngFor="let column of displayedColumns$.value; let columnIndex = index"
+            [style.width.px]="column.width ?? 180"
+            (click)="sortBy(column)"
+            [attr.aria-sort]="sort$.value?.key === column.key ? sort$.value?.direction : 'none'"
+          >
+            <div class="header-cell" [appColumnResize]="enableColumnResize">
+              <span>{{ column.title }}</span>
+              <button *ngIf="column.sortable" type="button" aria-label="Ordenar">
+                <span *ngIf="sort$.value?.key === column.key">
+                  {{ sort$.value?.direction === 'asc' ? '▲' : '▼' }}
+                </span>
+                <span *ngIf="sort$.value?.key !== column.key">⇅</span>
+              </button>
+            </div>
+            <input
+              *ngIf="column.filterable"
+              type="search"
+              [value]="columnFilters$.value[column.key] ?? ''"
+              (input)="updateColumnFilter(column.key, $event.target.value)"
+              placeholder="Filtro"
+              aria-label="Filtrar columna"
+            />
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="viewModel$ | async as vm">
+          <tr
+            *ngFor="let row of vm.rows; let rowIndex = index"
+            (click)="onRowClick(row, rowIndex, $event, vm.rows.length)"
+            [class.is-selected]="selection$.value.has(rowIndex)"
+            tabindex="0"
+          >
+            <td
+              *ngFor="let column of vm.columns; let colIndex = index"
+              (focus)="handleCellFocus(rowIndex, colIndex)"
+              [class.is-pinned-left]="column.pinned === 'left'"
+              [class.is-pinned-right]="column.pinned === 'right'"
+            >
+              <app-inline-edit-cell
+                *ngIf="enableInlineEdit"
+                [value]="row[column.key]"
+                [type]="column.type ?? 'text'"
+                [options]="column.options ?? []"
+                (valueChange)="handleCellEdit(rowIndex, column, row, $event)"
+              ></app-inline-edit-cell>
+              <span *ngIf="!enableInlineEdit">{{ row[column.key] }}</span>
+            </td>
+          </tr>
+          <tfoot>
+            <tr>
+              <td *ngFor="let column of vm.columns; let colIndex = index">
+                <span *ngIf="vm.summaries[colIndex] !== null">
+                  {{ vm.summaries[colIndex] | number: '1.0-0' }}
+                </span>
+              </td>
+            </tr>
+          </tfoot>
+        </ng-container>
+      </tbody>
+    </table>
+  </cdk-virtual-scroll-viewport>
+
+  <div class="data-table__pagination" role="navigation" aria-label="Paginación">
+    <button type="button" (click)="goToPage(Math.max(page$.value - 1, 0))" [disabled]="page$.value === 0">
+      ◀
+    </button>
+    <span>Página {{ page$.value + 1 }} / {{ (viewModel$ | async)?.totalPages }}</span>
+    <button
+      type="button"
+      (click)="goToPage(Math.min(page$.value + 1, ((viewModel$ | async)?.totalPages ?? 1) - 1))"
+      [disabled]="page$.value >= ((viewModel$ | async)?.totalPages ?? 1) - 1"
+    >
+      ▶
+    </button>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+@use '../../shared/styles/tokens' as *;
+
+.variant-a {
+  display: grid;
+  gap: spacing(2);
+}
+
+.variant__toolbar {
+  display: flex;
+  gap: spacing(1);
+  align-items: center;
+
+  button {
+    border: none;
+    background: color('accent');
+    color: color('on-accent');
+    padding: spacing(1) spacing(2);
+    border-radius: radius('pill');
+    cursor: pointer;
+  }
+
+  input {
+    flex: 1;
+    padding: spacing(1);
+    border-radius: radius('md');
+    border: 1px solid color('border');
+  }
+}
+
+.variant-a__table {
+  border: 1px solid color('border');
+  border-radius: radius('lg');
+  padding: spacing(1);
+  background: color('surface');
+}

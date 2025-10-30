@@ -1,0 +1,56 @@
+<section class="dashboard">
+  <header class="dashboard__header">
+    <h1>{{ 'nav.dashboard' | i18n }}</h1>
+    <p>Resumen de pipeline y actividades.</p>
+  </header>
+
+  <div class="dashboard__grid">
+    <app-kpi-card
+      *ngIf="kpi$ | async as kpi"
+      label="Oportunidades abiertas"
+      [value]="kpi.abiertas"
+      trend="up"
+      helper="vs. semana anterior"
+    ></app-kpi-card>
+    <app-kpi-card
+      *ngIf="kpi$ | async as kpi"
+      label="Monto total"
+      [value]="kpi.total | currency:'USD'"
+      trend="up"
+      helper="+12%"
+    ></app-kpi-card>
+    <app-kpi-card
+      *ngIf="kpi$ | async as kpi"
+      label="Win rate"
+      [value]="(kpi.winRate | percent:'1.0-0')"
+      trend="flat"
+    ></app-kpi-card>
+    <app-kpi-card
+      *ngIf="kpi$ | async as kpi"
+      label="Próximas actividades"
+      [value]="kpi.proximas"
+      trend="down"
+      helper="para hoy"
+    ></app-kpi-card>
+  </div>
+
+  <div class="dashboard__charts">
+    <app-mini-chart type="bar" [values]="[4, 8, 6, 12, 9, 14]"></app-mini-chart>
+    <app-mini-chart type="line" [values]="[120, 180, 160, 220, 260, 280]"></app-mini-chart>
+    <app-mini-chart type="donut" [values]="[45, 30, 25]"></app-mini-chart>
+  </div>
+
+  <section class="dashboard__activities" aria-labelledby="activitiesTitle">
+    <div class="dashboard__activities-header">
+      <h2 id="activitiesTitle">{{ 'dashboard.activities' | i18n }}</h2>
+      <button type="button">Marcar todas</button>
+    </div>
+    <app-data-table
+      [columns]="columns"
+      [data]="activities$ | async ?? []"
+      [pageSize]="10"
+      density="compact"
+      [enableInlineEdit]="false"
+    ></app-data-table>
+  </section>
+</section>

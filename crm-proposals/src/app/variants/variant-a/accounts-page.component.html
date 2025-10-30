@@ -1,0 +1,13 @@
+<section class="page accounts">
+  <header>
+    <h1>Cuentas</h1>
+    <input type="search" placeholder="Buscar cuenta" />
+  </header>
+  <app-data-table
+    [columns]="columns"
+    [data]="rows$ | async ?? []"
+    [pageSize]="30"
+    density="regular"
+    [enableInlineEdit]="false"
+  ></app-data-table>
+</section>

@@ -1,0 +1,33 @@
+@use '../../styles/tokens' as *;
+
+.kpi-card {
+  background: color('surface');
+  border-radius: radius('lg');
+  padding: spacing(2) spacing(3);
+  box-shadow: map-get($shadow-scale, 'soft');
+  border: 1px solid color('border');
+  display: grid;
+  gap: spacing(1);
+}
+
+.kpi-card__label {
+  color: color('text-muted');
+  font-size: 0.875rem;
+}
+
+.kpi-card__value {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.kpi-card__trend[data-trend='up'] {
+  color: color('positive');
+}
+
+.kpi-card__trend[data-trend='down'] {
+  color: color('critical');
+}
+
+.kpi-card__trend[data-trend='flat'] {
+  color: color('text-muted');
+}

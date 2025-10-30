@@ -1,0 +1,38 @@
+@use '../../styles/tokens' as *;
+
+.dashboard {
+  display: grid;
+  gap: spacing(3);
+}
+
+.dashboard__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.dashboard__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: spacing(2);
+}
+
+.dashboard__charts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: spacing(2);
+}
+
+.dashboard__activities {
+  background: color('surface');
+  border-radius: radius('lg');
+  border: 1px solid color('border');
+  padding: spacing(2);
+}
+
+.dashboard__activities-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: spacing(1.5);
+}

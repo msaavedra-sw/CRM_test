@@ -1,0 +1,36 @@
+@use '../../styles/tokens' as *;
+
+.inline-cell {
+  position: relative;
+  padding: spacing(0.5) spacing(1);
+  border-radius: radius('sm');
+  cursor: text;
+
+  &:hover {
+    background: color('surface-muted');
+  }
+
+  input,
+  select {
+    width: 100%;
+    padding: spacing(0.5);
+    border-radius: radius('sm');
+    border: 1px solid color('border');
+  }
+
+  .inline-cell__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: spacing(1);
+    margin-top: spacing(0.5);
+
+    button {
+      border: none;
+      background: color('accent');
+      color: color('on-accent');
+      border-radius: radius('pill');
+      padding: spacing(0.5) spacing(1);
+      cursor: pointer;
+    }
+  }
+}

@@ -1,0 +1,23 @@
+<section class="variant variant-b">
+  <header>
+    <h1>{{ 'variant.b.title' | i18n }}</h1>
+    <p>Tarjetas con resumen por etapa y tabla editable.</p>
+  </header>
+
+  <div class="variant-b__kanban" *ngIf="swimlanes$ | async as swimlanes">
+    <app-kpi-card
+      *ngFor="let etapa of swimlanes | keyvalue"
+      [label]="etapa.key"
+      [value]="etapa.value"
+      trend="flat"
+    ></app-kpi-card>
+  </div>
+
+  <app-data-table
+    [columns]="columns"
+    [data]="rows$ | async ?? []"
+    [pageSize]="25"
+    density="regular"
+    [enableInlineEdit]="true"
+  ></app-data-table>
+</section>

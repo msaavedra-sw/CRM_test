@@ -1,0 +1,10 @@
+<div class="kpi-card" role="status">
+  <div class="kpi-card__label">{{ label }}</div>
+  <div class="kpi-card__value">{{ value }}</div>
+  <div class="kpi-card__trend" [attr.data-trend]="trend">
+    <span *ngIf="trend === 'up'">▲</span>
+    <span *ngIf="trend === 'down'">▼</span>
+    <span *ngIf="trend === 'flat'">▪</span>
+    <span class="kpi-card__helper">{{ helper }}</span>
+  </div>
+</div>

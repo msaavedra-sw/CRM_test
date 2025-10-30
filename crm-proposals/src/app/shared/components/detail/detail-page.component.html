@@ -1,0 +1,24 @@
+<section class="detail">
+  <header class="detail__header" role="banner">
+    <div>
+      <h1>{{ header.titulo }}</h1>
+      <p>{{ header.estado }} · {{ header.propietario }}</p>
+    </div>
+    <div class="detail__meta">
+      <span *ngIf="header.monto">{{ header.monto | currency:'USD' }}</span>
+      <span *ngIf="header.fechaCierre">Cierra {{ header.fechaCierre | date }}</span>
+    </div>
+  </header>
+
+  <nav class="detail__tabs" role="tablist">
+    <button type="button" role="tab" aria-selected="true">Resumen</button>
+    <button type="button" role="tab">Actividades</button>
+    <button type="button" role="tab">Historial</button>
+    <button type="button" role="tab">Archivos</button>
+  </nav>
+
+  <div class="detail__content">
+    <app-side-panel [properties]="properties"></app-side-panel>
+    <app-activities-timeline [items]="timeline"></app-activities-timeline>
+  </div>
+</section>

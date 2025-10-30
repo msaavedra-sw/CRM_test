@@ -1,0 +1,21 @@
+@use '../../shared/styles/tokens' as *;
+
+.page {
+  display: grid;
+  gap: spacing(2);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+button {
+  border: none;
+  background: color('accent');
+  color: color('on-accent');
+  padding: spacing(1) spacing(2);
+  border-radius: radius('pill');
+  margin-left: spacing(1);
+}
