@@ -1,0 +1,19 @@
+<section class="timeline" aria-label="Actividades">
+  <header>
+    <h3>Timeline</h3>
+    <div>
+      <button type="button" (click)="add('llamada')">Llamada</button>
+      <button type="button" (click)="add('reunion')">Reunión</button>
+      <button type="button" (click)="add('tarea')">Tarea</button>
+    </div>
+  </header>
+  <ol>
+    <li *ngFor="let item of items">
+      <span class="timeline__date">{{ item.fecha | date }}</span>
+      <div>
+        <strong>{{ item.titulo }}</strong>
+        <p>{{ item.descripcion }}</p>
+      </div>
+    </li>
+  </ol>
+</section>

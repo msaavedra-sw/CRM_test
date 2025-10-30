@@ -1,0 +1,47 @@
+@use '../../styles/tokens' as *;
+
+.detail {
+  display: grid;
+  gap: spacing(2);
+}
+
+.detail__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: color('surface');
+  padding: spacing(2) spacing(3);
+  border-radius: radius('lg');
+  border: 1px solid color('border');
+}
+
+.detail__tabs {
+  display: flex;
+  gap: spacing(1);
+
+  button {
+    background: color('surface');
+    border: 1px solid color('border');
+    border-radius: radius('pill');
+    padding: spacing(1) spacing(2);
+    cursor: pointer;
+
+    &[aria-selected='true'] {
+      background: color('accent');
+      color: color('on-accent');
+    }
+  }
+}
+
+.detail__content {
+  display: grid;
+  grid-template-columns: minmax(320px, 360px) 1fr;
+  gap: spacing(2);
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .detail__content {
+    grid-template-columns: 1fr;
+  }
+}

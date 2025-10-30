@@ -1,0 +1,24 @@
+<div class="inline-cell" (dblclick)="toggleEdit()">
+  <ng-container [ngSwitch]="isEditing">
+    <ng-container *ngSwitchCase="true">
+      <input
+        *ngIf="type !== 'select'"
+        [type]="type === 'number' ? 'number' : type"
+        [ngModel]="value"
+        (ngModelChange)="value = $event"
+        (keyup.enter)="commit(value)"
+        (keyup.escape)="cancel()"
+      />
+      <select *ngIf="type === 'select'" [ngModel]="value" (ngModelChange)="value = $event">
+        <option *ngFor="let option of options" [ngValue]="option.value">{{ option.label }}</option>
+      </select>
+      <div class="inline-cell__actions">
+        <button type="button" (click)="commit(value)">✔</button>
+        <button type="button" (click)="cancel()">✖</button>
+      </div>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+      {{ value }}
+    </ng-container>
+  </ng-container>
+</div>

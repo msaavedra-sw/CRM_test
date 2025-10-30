@@ -1,0 +1,15 @@
+@use './app/shared/styles/tokens';
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+* {
+  box-sizing: border-box;
+}

@@ -1,0 +1,17 @@
+<aside class="side-panel" aria-label="Propiedades clave">
+  <h3>Propiedades</h3>
+  <ul>
+    <li *ngFor="let property of properties">
+      <span>{{ property.label }}</span>
+      <ng-container *ngIf="property.editable; else readOnly">
+        <input
+          [ngModel]="property.value"
+          (ngModelChange)="update(property.label, $event)"
+        />
+      </ng-container>
+      <ng-template #readOnly>
+        <strong>{{ property.value }}</strong>
+      </ng-template>
+    </li>
+  </ul>
+</aside>

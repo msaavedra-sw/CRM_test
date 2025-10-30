@@ -1,0 +1,13 @@
+<div class="saved-views" role="navigation" aria-label="Vistas guardadas">
+  <span class="saved-views__title">Vistas guardadas</span>
+  <div class="saved-views__chips">
+    <button
+      type="button"
+      *ngFor="let view of views$ | async"
+      [class.is-active]="view.active"
+      (click)="activate(view.name)"
+    >
+      {{ view.name }}
+    </button>
+  </div>
+</div>

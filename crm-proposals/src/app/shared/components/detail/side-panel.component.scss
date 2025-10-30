@@ -1,0 +1,30 @@
+@use '../../styles/tokens' as *;
+
+.side-panel {
+  background: color('surface');
+  border-radius: radius('lg');
+  padding: spacing(2);
+  border: 1px solid color('border');
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: spacing(1) 0 0;
+  display: grid;
+  gap: spacing(1.5);
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  gap: spacing(1);
+  align-items: center;
+}
+
+input {
+  flex: 1;
+  padding: spacing(0.5) spacing(1);
+  border-radius: radius('sm');
+  border: 1px solid color('border');
+}

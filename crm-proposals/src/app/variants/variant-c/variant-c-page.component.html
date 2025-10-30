@@ -1,0 +1,37 @@
+<section class="variant variant-c">
+  <header>
+    <h1>{{ 'variant.c.title' | i18n }}</h1>
+    <p>Panel dividido maestro-detalle con atajos de teclado.</p>
+  </header>
+  <div class="variant-c__split">
+    <div class="variant-c__master">
+      <app-data-table
+        [columns]="columns"
+        [data]="rows$ | async ?? []"
+        [pageSize]="30"
+        density="compact"
+        (rowSelected)="select($event.row)"
+      ></app-data-table>
+    </div>
+    <div class="variant-c__detail" *ngIf="selection() as selected">
+      <app-detail-page
+        [header]="{
+          titulo: String(selected['nombre']),
+          estado: String(selected['etapa']),
+          propietario: String(selected['propietario'] ?? 'Sin asignar'),
+          monto: Number(selected['monto']),
+          fechaCierre: String(selected['cierrePrevisto'])
+        }"
+        [properties]="[
+          { label: 'Probabilidad', value: selected['probabilidad'] },
+          { label: 'Cuenta', value: selected['cuenta'] },
+          { label: 'Fuente', value: selected['fuente'] },
+          { label: 'Territorio', value: selected['territorio'] }
+        ]"
+        [timeline]="[
+          { fecha: selected['cierrePrevisto'] as string, titulo: 'Cierre esperado', descripcion: 'Seguimiento automático' }
+        ]"
+      ></app-detail-page>
+    </div>
+  </div>
+</section>

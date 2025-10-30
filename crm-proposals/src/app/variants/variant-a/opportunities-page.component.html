@@ -1,0 +1,17 @@
+<section class="page opportunities">
+  <header>
+    <h1>Oportunidades</h1>
+    <div>
+      <button type="button">Nueva oportunidad</button>
+      <button type="button">Duplicar</button>
+      <button type="button">Exportar</button>
+    </div>
+  </header>
+  <app-data-table
+    [columns]="columns"
+    [data]="(view$ | async)?.rows ?? []"
+    [pageSize]="40"
+    density="compact"
+    (cellEdited)="onCellEdit($event)"
+  ></app-data-table>
+</section>

@@ -1,0 +1,43 @@
+@use '../../styles/tokens' as *;
+
+.timeline {
+  background: color('surface');
+  border-radius: radius('lg');
+  border: 1px solid color('border');
+  padding: spacing(2);
+  display: grid;
+  gap: spacing(2);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  button {
+    border: none;
+    border-radius: radius('pill');
+    padding: spacing(0.5) spacing(1.5);
+    background: color('accent');
+    color: color('on-accent');
+    cursor: pointer;
+  }
+}
+
+ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: spacing(1.5);
+}
+
+li {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: spacing(1);
+}
+
+.timeline__date {
+  color: color('text-muted');
+}

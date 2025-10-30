@@ -1,0 +1,20 @@
+<header class="app-shell__header" role="banner">
+  <div class="app-shell__brand" tabindex="0">{{ brand }}</div>
+  <nav class="app-shell__nav" aria-label="Principal">
+    <a routerLink="/dashboard" routerLinkActive="active">{{ 'nav.dashboard' | i18n }}</a>
+    <a routerLink="/oportunidades" routerLinkActive="active">{{ 'nav.opportunities' | i18n }}</a>
+    <a routerLink="/cuentas" routerLinkActive="active">{{ 'nav.accounts' | i18n }}</a>
+    <a routerLink="/propuesta/a" routerLinkActive="active">{{ 'nav.variantA' | i18n }}</a>
+    <a routerLink="/propuesta/b" routerLinkActive="active">{{ 'nav.variantB' | i18n }}</a>
+    <a routerLink="/propuesta/c" routerLinkActive="active">{{ 'nav.variantC' | i18n }}</a>
+  </nav>
+  <button type="button" class="app-shell__theme" (click)="toggleTheme()">
+    {{ 'nav.toggleTheme' | i18n }}
+  </button>
+</header>
+<main class="app-shell__main" role="main">
+  <router-outlet />
+</main>
+<footer class="app-shell__footer" role="contentinfo">
+  <app-saved-views></app-saved-views>
+</footer>

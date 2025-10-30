@@ -1,0 +1,12 @@
+@use '../../shared/styles/tokens' as *;
+
+.variant-b {
+  display: grid;
+  gap: spacing(2);
+}
+
+.variant-b__kanban {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: spacing(1.5);
+}
